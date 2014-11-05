@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/images"/>
+    <qresource prefix="/styles">
+        <file>style1.css</file>
+    </qresource>
+</RCC>

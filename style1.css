@@ -1,0 +1,114 @@
+Colors1 {
+colo-blue-dark: #263248;
+colo-blue-light: #7E8AA2;
+color-white: #FFFFFF;
+color-yellow: #FF9800;
+}
+
+Colors2 {
+color-gray-dark: #393939;
+color-orange-bright: #FF5109;
+color-orange-pale: #f3843E;
+color-gray-light: #6E6E6E;
+}
+
+MostSettings {
+background-color: #263248;
+background-image: none;
+
+color: black;
+text-align: left;
+text-decoration: none;
+text-tindent: 0px;
+
+font-family: "Garamond",Arial,Times;
+font-style: normal;
+font-size: 16px;
+font-weight: bold;
+
+
+border-color: black;
+border-style: none;
+border-width: 2px;
+border-radius: 3px;
+
+margin: 25px 25px 25px 50px;
+padding: 50px 50px 50px 50px;
+
+visibility: visible
+}
+
+QWidget {
+background: #FFFFFF;
+}
+
+QFrame {
+background: #393939;
+border-style: solid;
+border-width: 3px;
+border-color: #263248;
+border-radius: 0px;
+
+margin: 0px 0px 0px 0px;
+padding: 0px 0px 0px 0px;
+}
+
+
+QLabel {
+background-color: #393939;
+color: #f3843E;
+
+border-style: dotted;
+border-width: 2px;
+border-color: #263248;
+border-radius: 0px;
+
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+font-family: "Garamond";
+border-style: dotted;
+}
+
+#frmHeadingAndMenus {
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+font-family: "Garamond",Aria,Timesl;
+border-stye: none;
+}
+
+#lblHeader {
+color: #FF5109;
+font-family: Arial,"Garamond",Times;
+font-style: normal;
+font-size: 54px;
+font-weight: bold;
+margin: 18px 54px 18px 0px
+}
+
+#frmDisplay {
+background-color: #6E6E6E;
+}
+
+#lblDisplay {
+
+}
+
+#frmMenuLeft QLabel{
+
+}
+
+QPushButton{
+background-color: #393939;
+color: #f3843E;;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+font-family: "Garamond";
+border-style: none;
+border-width: 0px;
+margin: 0px 0px 0px 0px;
+padding: 12px 18px 12px 6px;
+text-align: left;
+}
