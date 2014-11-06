@@ -13,13 +13,12 @@ int main(int argc, char *argv[])
 
     MainWindow mainWin;
 
-/*
-    QFile file(":/styles/style1.css");
-    file.open(QIODevice::ReadOnly);
-    QString style1(file.readAll());
-    app.setStyleSheet(style1);
-    file.close();
-*/
+    //QFile file(":/styles/style1.css");
+    //file.open(QIODevice::ReadOnly);
+    //QString style1(file.readAll());
+    //app.setStyleSheet(style1);
+    //file.close();
+
     mainWin.show();
 
     return app.exec();

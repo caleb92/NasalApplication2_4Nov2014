@@ -10,6 +10,8 @@
 #include <QFile>
 #include <QTextStream>
 
+#include "stasm_lib.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -189,10 +191,30 @@ void MainWindow::openCamera()
 void MainWindow::processFrameAndUpdateGUI()
 {
     capWebcam.read(matOriginal);
-    if(matOriginal.empty() == true) return;
-    cv::cvtColor(matOriginal, matOriginal, CV_BGR2RGB);
-    QImage qimgOriginal((uchar*)matOriginal.data, matOriginal.cols, matOriginal.rows, matOriginal.step, QImage::Format_RGB888);
-    ui->lblDisplay->setPixmap(QPixmap::fromImage(qimgOriginal));
+    if(matOriginal.empty() == true)
+    {
+        printf("Failed to read from capture device!");
+        return;
+    }
+
+    cv::cvtColor(matOriginal, matOriginal, CV_BGR2GRAY);//CV_BGR2RGB
+
+    if (!stasm_search_single(&foundface, landmarks,
+                             (const char*)matOriginal.data, matOriginal.cols, matOriginal.rows, "/stasm_search_single_ERRORS", "../data"))
+    {
+        printf("Error in stasm_search_single: %s\n", stasm_lasterr());
+        exit(1);
+    }
+
+    if (foundface)
+    {
+        // draw the landmarks on the image as white dots (image is monochrome)
+        stasm_force_points_into_image(landmarks, matOriginal.cols, matOriginal.rows);
+        for (int i = 0; i < stasm_NLANDMARKS; i++)
+            matOriginal(cvRound(landmarks[i*2+1]), cvRound(landmarks[i*2])) = 255;
+    }
+
+    QImage qimgOriginal((uchar*)matOriginal.data, matOriginal.cols, matOriginal.rows, matOriginal.step, QImage::Format_Indexed8);
     ui->lblDisplay_2->setPixmap(QPixmap::fromImage(qimgOriginal));
 }
 

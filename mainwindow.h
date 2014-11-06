@@ -8,6 +8,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include "stasm_lib.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -32,7 +34,14 @@ private:
     QString qstrSubMenuActive;
 
     cv::VideoCapture capWebcam;
-    cv::Mat matOriginal;
+
+    //cv::Mat matOriginal;
+    cv::Mat_<unsigned char> matOriginal;//(cv::imread(path, CV_LOAD_IMAGE_GRAYSCALE));
+    int foundface;
+    float landmarks[2 * stasm_NLANDMARKS]; // x,y coords (note the 2)
+    int nNumberNasalLandmarks;
+    float fNasalLandmarks;
+
     cv::Mat matProcessed;
     QImage qimgOriginal;
     QImage qimgProcessed;
