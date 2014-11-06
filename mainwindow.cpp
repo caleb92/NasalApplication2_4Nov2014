@@ -37,10 +37,12 @@ void MainWindow::on_btnFiles_clicked()
     ui->btnSubMenu1->setStyleSheet(qstrSubMenuActive);
     ui->btnSubMenu2->setStyleSheet(qstrSubMenuActive);
     ui->btnSubMenu3->setStyleSheet(qstrSubMenuActive);
+
     //set file sub menu text
     ui->btnSubMenu1->setText("Open File");
     ui->btnSubMenu2->setText("Close File");
-    ui->btnSubMenu3->setText("File Viewer Settings");
+    ui->btnSubMenu3->setText("Viewer Settings");
+    ui->btnSubMenu4->setText("");
 
     //remove file menu styling for inactive buttons
     ui->btnSetup->setStyleSheet("");
@@ -69,7 +71,7 @@ void MainWindow::on_btnSetup_clicked()
     ui->btnSubMenu3->setStyleSheet(qstrSubMenuActive);
     ui->btnSubMenu4->setStyleSheet(qstrSubMenuActive);
     //set file sub menu text
-    ui->btnSubMenu1->setText("Open Capture Device");
+    ui->btnSubMenu1->setText("Open Capture");
     ui->btnSubMenu2->setText("Pause Capture");
     ui->btnSubMenu3->setText("Close Capture");
     ui->btnSubMenu4->setText("Capture Settings");
@@ -98,7 +100,7 @@ void MainWindow::on_btnVerification_clicked()
     ui->btnSubMenu2->setStyleSheet(qstrSubMenuActive);
     ui->btnSubMenu3->setStyleSheet(qstrSubMenuActive);
     //set file sub menu text
-    ui->btnSubMenu1->setText("Uset Tool1");
+    ui->btnSubMenu1->setText("Use Tool1");
     ui->btnSubMenu2->setText("Use Tool2");
     ui->btnSubMenu3->setText("Display Settings");
 
@@ -121,14 +123,22 @@ void MainWindow::on_btnVerification_clicked()
 
 void MainWindow::on_btnHelp_clicked()
 {
+    ui->TextPage->setVisible(true);
+    ui->textBrowser->setVisible(true);
 
+    QFile helpfile("C://Users/Mike/Documents/SENIOR DESIGN/help.txt");
+    if(!helpfile.open(QIODevice::ReadOnly))
+        QMessageBox::information(0,"info",helpfile.errorString());
+    ui->lblDisplay_2->hide();
+    QTextStream in(&helpfile);
+    ui->textBrowser->setText(in.readAll());
 }
 
 
 void MainWindow::on_btnSubMenu1_clicked()
 {
     QString currentText = ui->btnSubMenu1->text();
-    if(currentText == "Open Capture Device"){
+    if(currentText == "Open Capture"){
         openCamera();
         ui->TextPage->setVisible(false);
         ui->CamPage->setVisible(true);
@@ -139,12 +149,12 @@ void MainWindow::on_btnSubMenu1_clicked()
         QString filename = QFileDialog::getOpenFileName(
                     this,
                     tr("Open File"),
-                    "C://",
-                    "All files (*.*)"
+                    "C://Users/Mike/Documents",
+                    "Text files (*.txt)"
                     );
        // QDesktopServices::openUrl(QUrl("file:///"+ filename ,QUrl::TolerantMode));
 
-        ui->textBrowser->show();
+        ui->textBrowser->setVisible(true);
         ui->CamPage->setVisible(false);
         ui->TextPage->setVisible(true);
 
@@ -154,6 +164,7 @@ void MainWindow::on_btnSubMenu1_clicked()
         ui->lblDisplay_2->hide();
         QTextStream in(&file);
         ui->textBrowser->setText(in.readAll());
+
     }
 }
 
@@ -187,23 +198,41 @@ void MainWindow::processFrameAndUpdateGUI()
 
 void MainWindow::on_btnSubMenu3_clicked()
 {
-    if(tmrTimer->isActive() == true)
-    {
-        tmrTimer->stop();
-        ui->btnSubMenu3->setText("resume");
-    } else
-    {
-        tmrTimer->start(20);
-        ui->btnSubMenu3->setText("pause");
-    }
+
+    tmrTimer->stop();
+    QPixmap *blank = new QPixmap(640,480);
+    blank->fill(Qt::black);
+    ui->lblDisplay_2->setPixmap(*blank);
+
+
 }
 
 void MainWindow::on_btnSubMenu2_clicked()
 {
-    tmrTimer->stop();
-    QPixmap *blank = new QPixmap(640,480);
-    blank->fill(Qt::black);
-    ui->lblDisplay->setPixmap(*blank);
+    QString currentText = ui->btnSubMenu2->text();
+
+    if(currentText == "Pause Capture" || "Resume" ){
+       if(tmrTimer->isActive() == true)
+        {
+        tmrTimer->stop();
+        ui->btnSubMenu2->setText("Resume");
+        } else
+         {
+        tmrTimer->start(20);
+        ui->btnSubMenu2->setText("Pause Capture");
+        }
+    }
+    if(currentText == "Close File")
+    {
+ /*
+        QFile blankfile("C://Users/Mike/Documents/SENIOR DESIGN/blank.txt");
+        if(!blankfile.open(QIODevice::ReadOnly))
+            QMessageBox::information(0,"info",blankfile.errorString());
+        QTextStream in(&blankfile);
+*/
+    ui->textBrowser->setText(QString("hello"));
+            }
+
 }
 
 void MainWindow::styleInit()
