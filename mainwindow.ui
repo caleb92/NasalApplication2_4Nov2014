@@ -160,7 +160,7 @@ padding: 12px 6px 12px 6px;
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,4,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0">
        <property name="spacing">
         <number>6</number>
        </property>
@@ -570,6 +570,9 @@ padding: 12px 6px 12px 6px;
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Preferred</enum>
+               </property>
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>40</width>
@@ -586,11 +589,11 @@ padding: 12px 6px 12px 6px;
        </item>
        <item>
         <widget class="QFrame" name="frmDisplay">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>200</height>
+          </size>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -615,6 +618,71 @@ padding: 12px 6px 12px 6px;
            <number>6</number>
           </property>
           <item>
+           <widget class="QStackedWidget" name="stackedWidget">
+            <property name="minimumSize">
+             <size>
+              <width>10</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background: #393939</string>
+            </property>
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
+            <widget class="QWidget" name="CamPage">
+             <widget class="QLabel" name="lblDisplay_2">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>661</width>
+                <height>601</height>
+               </rect>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>10</width>
+                <height>10</height>
+               </size>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="TextPage">
+             <widget class="QTextBrowser" name="textBrowser">
+              <property name="geometry">
+               <rect>
+                <x>60</x>
+                <y>80</y>
+                <width>561</width>
+                <height>431</height>
+               </rect>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background: white
+</string>
+              </property>
+             </widget>
+            </widget>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="lblDisplay">
             <property name="enabled">
              <bool>true</bool>
@@ -627,8 +695,14 @@ padding: 12px 6px 12px 6px;
             </property>
             <property name="minimumSize">
              <size>
-              <width>640</width>
-              <height>480</height>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>0</height>
              </size>
             </property>
             <property name="autoFillBackground">
@@ -641,19 +715,6 @@ padding: 12px 6px 12px 6px;
           </item>
          </layout>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>

@@ -5,7 +5,10 @@
 #include <QtCore>
 #include <QMessageBox>
 #include <QString>
-
+#include <QFileDialog>
+#include <QDesktopServices>
+#include <QFile>
+#include <QTextStream>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -47,12 +50,14 @@ void MainWindow::on_btnFiles_clicked()
     ui->btnSubMenu5->setStyleSheet("");
 
     //empty display frame: frmDisplay
-    ui->lblDisplay->hide();
+   // ui->lblDisplay->hide();
 
     //do file menu stuff
 
 
 }
+
+
 
 void MainWindow::on_btnSetup_clicked()
 {
@@ -123,8 +128,33 @@ void MainWindow::on_btnHelp_clicked()
 void MainWindow::on_btnSubMenu1_clicked()
 {
     QString currentText = ui->btnSubMenu1->text();
-    if(currentText == "Open Camera")
+    if(currentText == "Open Capture Device"){
         openCamera();
+        ui->TextPage->setVisible(false);
+        ui->CamPage->setVisible(true);
+        ui->lblDisplay_2->setVisible(true);
+    }
+    if(currentText == "Open File")
+    {
+        QString filename = QFileDialog::getOpenFileName(
+                    this,
+                    tr("Open File"),
+                    "C://",
+                    "All files (*.*)"
+                    );
+       // QDesktopServices::openUrl(QUrl("file:///"+ filename ,QUrl::TolerantMode));
+
+        ui->textBrowser->show();
+        ui->CamPage->setVisible(false);
+        ui->TextPage->setVisible(true);
+
+        QFile file(filename);
+        if(!file.open(QIODevice::ReadOnly))
+            QMessageBox::information(0,"info",file.errorString());
+        ui->lblDisplay_2->hide();
+        QTextStream in(&file);
+        ui->textBrowser->setText(in.readAll());
+    }
 }
 
 void MainWindow::openCamera()
@@ -152,7 +182,7 @@ void MainWindow::processFrameAndUpdateGUI()
     cv::cvtColor(matOriginal, matOriginal, CV_BGR2RGB);
     QImage qimgOriginal((uchar*)matOriginal.data, matOriginal.cols, matOriginal.rows, matOriginal.step, QImage::Format_RGB888);
     ui->lblDisplay->setPixmap(QPixmap::fromImage(qimgOriginal));
-
+    ui->lblDisplay_2->setPixmap(QPixmap::fromImage(qimgOriginal));
 }
 
 void MainWindow::on_btnSubMenu3_clicked()
